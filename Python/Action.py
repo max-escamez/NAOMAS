@@ -1,4 +1,4 @@
-class Action
+class Action:
     """Class Action, define an action.
     attributs :
     - ActionType type : the type of the action
