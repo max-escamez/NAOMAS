@@ -3,7 +3,7 @@ import time
 from naoqi import ALModule
 
 class EstimationModule(ALModule) :
-    """analyse and store the new object in BDI"""
+    """analyse and store the new face in BDI"""
 
     def estimate(self, strVarName, value, strMessage):
         """callbak when data change"""

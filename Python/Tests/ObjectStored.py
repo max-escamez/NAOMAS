@@ -1,26 +1,23 @@
 class ObjectStored:
-    """ Class who define an object stored in the robot memory.
-    The object is caracterized by :
-    - its shape
-    - its color
+    """ Class who define a face stored in the robot memory.
+    The face is caracterized by :
+    - its value
     - its position on x axis
     - its position on y axis
     """
         
-    SHAPES_VALS = {'cube': 1, 'sphere': 2, 'pyramid': 3}
-    COLORS_VALS = {'blue': 1, 'red': 2, 'green':3}
+    VALS = {'small': 1, 'medium': 2, 'big': 3}
     ENERGY_COST = 1
 
-    def __init__(self, f, c, x, y):
+    def __init__(self, v, x, y):
         """Constructor"""
-        self.shape = f
-        self.color = c
+        self.value = v
         self.x = x
         self.y = y
     
     def reward(object):
         """Calculate the reward"""
-        return ObjectStored.SHAPES_VALS[object.shape] + ObjectStored.COLORS_VALS[object.color]
+        return ObjectStored.VALS[object.shape]
     
     def cost(object):
         """Calculate the movement energy cost"""
