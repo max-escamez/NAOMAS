@@ -46,7 +46,7 @@ def main(IP, PORT, faceSize):
     posture = ALProxy("ALRobotPosture", IP, PORT)
     tts = ALProxy("ALTextToSpeech",IP, PORT)
     
-    reactToTouch = ALProxy("ReactToTouch")
+    reactToTouch = ALProxy("ReactToTouch", IP, PORT)
     # au lieu de : global ReactToTouch
     # et : ReactToTouch = ReactToTouch("ReactToTouch")
 
