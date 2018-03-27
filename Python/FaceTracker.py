@@ -26,15 +26,15 @@ class ReactToTouch(ALModule):
 
         global memory
         memory = ALProxy("ALMemory")
-        memory.subscribeToEvent("TouchChanged", "ReactToTouch", "onTouched")
+        memory.subscribeToEvent("FrontTactilTouched", "ReactToTouch", "onTouched")
 
     def onTouched(self, strVarName, value):
 
-        memory.unsubscribeToEvent("TouchChanged", "ReactToTouch")
-        for p in value:
-            if p[0] == 'Head' and p[1]:
-                self.posture.goToPosture("Crouch", 1.0)
-        memory.subscribeToEvent("TouchChanged", "ReactToTouch", "onTouched")
+        memory.unsubscribeToEvent("FrontTactilTouched", "ReactToTouch")
+        #for p in value:
+        #    if p[0] == 'Head' and p[1]:
+        self.posture.goToPosture("Crouch", 1.0)
+        memory.subscribeToEvent("FrontTactilTouched", "ReactToTouch", "onTouched")
 
 
 
@@ -55,16 +55,19 @@ def main(IP, PORT, faceSize):
     global ReactToTouch
     ReactToTouch = ReactToTouch("ReactToTouch")
 
-    motion.wakeUp()
-    posture.goToPosture("Stand", 1.0)
+    #motion.wakeUp()
+    #posture.goToPosture("Stand", 1.0)
 
     # Add target to track.
-    targetName = "Face"
+    targetName = "People"
+    peopleid = 1
     faceWidth = faceSize
     offset = 0.10
-    tracker.registerTarget(targetName, faceWidth)
+    tracker.registerTarget(targetName, peopleid)
+    print tracker.getRegisteredTargets()
 
-
+    #mode = "Head"
+    #tracker.setMode(mode)
 
     # Then, start tracker.
     tracker.track(targetName)
@@ -79,19 +82,19 @@ def main(IP, PORT, faceSize):
             if not tracker.isTargetLost():
                 tts.say("Je vois quelqu'un")
                 target = tracker.getTargetPosition()
-                #print target[0]
-                #print target[1]
-                #print target[2]
-                phi = np.arctan2(target[1], target[0])
-                if target[1]-offset > 0:
-                    motion.moveTo(target[0]+offset, target[1]-offset, phi)
-                    tts.say("J'ai quelque chose à te dire")
-                    posture.goToPosture("Crouch", 1.0)
-                    flag = False
-                else :
-                    tts.say("J'ai quelque chose à te dire et je n'ai même pas eu à bouger")
-                    posture.goToPosture("Crouch", 1.0)
-                    flag = False
+                print target[0]
+                print target[1]
+                print target[2]
+                #phi = np.arctan2(target[1], target[0])
+                #if target[1]-offset > 0:
+                #    motion.moveTo(target[0]+offset, target[1]-offset, phi)
+                #    tts.say("J'ai quelque chose à te dire")
+                #    posture.goToPosture("Crouch", 1.0)
+                #    flag = False
+                #else:
+                #    tts.say("J'ai quelque chose à te dire et je n'ai même pas eu à bouger")
+                #    posture.goToPosture("Crouch", 1.0)
+                #    flag = False
             else:
                 tts.say("Je ne vois personne")
 

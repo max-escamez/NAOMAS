@@ -6,9 +6,10 @@ import qi
 import time
 import sys
 import argparse
+from naoqi import ALProxy
 
 
-class HumanGreeter(object):
+class Search(object):
     """
     A simple class to react to face detection events.
     """
@@ -17,7 +18,7 @@ class HumanGreeter(object):
         """
         Initialisation of qi framework and event detection.
         """
-        super(HumanGreeter, self).__init__()
+        super(Search, self).__init__()
         app.start()
         session = app.session
         # Get the service ALMemory.
@@ -30,35 +31,37 @@ class HumanGreeter(object):
         self.face_detection = session.service("ALFaceDetection")
         self.face_detection.subscribe("HumanGreeter")
         self.got_face = False
+        self.tracker = session.service("ALTracker")
+        self.motion = session.service("ALMotion")
+
 
     def on_human_tracked(self, value):
         """
         Callback for event FaceDetected.
         """
+
+        targetname = "Face"
+        facewidth = 0.1
+        self.tracker.registerTarget(targetname, facewidth)
+
         if value == []:  # empty value when the face disappears
             self.got_face = False
         elif not self.got_face:  # only speak the first time a face appears
-            self.got_face = True
-            print "I saw a face!"
-            self.tts.say("Hello!")
-            # First Field = TimeStamp.
-            timeStamp = value[0]
-            print "TimeStamp is: " + str(timeStamp)
-
-            # Second Field = array of face_Info's.
             faceInfoArray = value[1]
             for j in range( len(faceInfoArray)-1 ):
                 faceInfo = faceInfoArray[j]
-
-                # First Field = Shape info.
-                faceShapeInfo = faceInfo[0]
-
-                # Second Field = Extra info (empty for now).
                 faceExtraInfo = faceInfo[1]
+                if faceExtraInfo[2] == "Max":
+                    self.got_face = True
+                    self.tracker.track("Face")
+                    target = self.tracker.getTargetPosition()
+                    print target[0]
+                    print target[1]
+                    print target[2]
+                    self.tts.say("J'ai détecté "+faceExtraInfo[2])
+                else:
+                    self.got_face = False
 
-                print "Face Infos :  alpha %.3f - beta %.3f" % (faceShapeInfo[1], faceShapeInfo[2])
-                print "Face Infos :  width %.3f - height %.3f" % (faceShapeInfo[3], faceShapeInfo[4])
-                print "Face Extra Infos :" + str(faceExtraInfo)
 
     def run(self):
         """
@@ -75,22 +78,4 @@ class HumanGreeter(object):
             sys.exit(0)
 
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--ip", type=str, default="169.254.76.111",
-                        help="Robot IP address. On robot or Local Naoqi: use '127.0.0.1'.")
-    parser.add_argument("--port", type=int, default=9559,
-                        help="Naoqi port number")
 
-    args = parser.parse_args()
-    try:
-        # Initialize qi framework.
-        connection_url = "tcp://" + args.ip + ":" + str(args.port)
-        app = qi.Application(["HumanGreeter", "--qi-url=" + connection_url])
-    except RuntimeError:
-        print ("Can't connect to Naoqi at ip \"" + args.ip + "\" on port " + str(args.port) +".\n"
-               "Please check your script arguments. Run with -h option for help.")
-        sys.exit(1)
-
-    human_greeter = HumanGreeter(app)
-    human_greeter.run()
