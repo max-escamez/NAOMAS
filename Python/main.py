@@ -6,7 +6,6 @@ import qi
 import sys
 import argparse
 from Search import Search
-from naoqi import ALProxy
 
 
 if __name__ == "__main__":
@@ -26,11 +25,12 @@ if __name__ == "__main__":
                "Please check your script arguments. Run with -h option for help.")
         sys.exit(1)
 
-
     PORT = 9559
     IP = "169.254.76.111"
-    auto = ALProxy("ALAutonomousLife", IP, PORT)
-    #auto.setAutonomousAbilityEnabled('All', True)
+    #desires = {'Marie': ['Message a direct', 'Message a indirect'], 'Max': ['Message b direct', 'Message b indirect']}
+    desires = {'Marie': ['Message a direct', 'Message a indirect']}
+    #believes = {'Marie': ['Johnny'], 'Max': ['Anna', 'Jake']}
+    believes = {'Marie': ['Max']}
 
     search = Search(app)
-    search.run()
+    search.run(desires, believes)
