@@ -27,10 +27,25 @@ if __name__ == "__main__":
 
     PORT = 9559
     IP = "169.254.76.111"
-    #desires = {'Marie': ['Message a direct', 'Message a indirect'], 'Max': ['Message b direct', 'Message b indirect']}
-    desires = {'Marie': ['Message a direct', 'Message a indirect']}
-    #believes = {'Marie': ['Johnny'], 'Max': ['Anna', 'Jake']}
-    believes = {'Marie': ['Max']}
+    scenario = 2
+
+    if scenario == 1:
+        desires = {'Marie': ['L\'équipe t\'attend en salle de réunion', 'Dis à Marie que l\'équipe l\'attend en salle \
+        de réunion'], 'Max': ['Tu es viré !', 'Dis à Max, qu\'il est viré !']}
+
+        believes = {'Marie': ['Johnny'], 'Max': ['Anna', 'Jake']}
+
+    elif scenario == 2:
+        desires = {'Anna': ['L\'équipe t\'attend en salle de réunion', 'Dis à Anna que l\'équipe l\'attend en salle \
+        de réunion']}
+
+        believes = {'Anna': ['Max']}
+
+    else:
+        desires = {'Anna': ['L\'équipe t\'attend en salle de réunion', 'Dis à Anna que l\'équipe l\'attend en salle \
+        de réunion']}
+
+        believes = {'Anna': ['Jake', 'Johnny']}
 
     search = Search(app)
     search.run(desires, believes)
