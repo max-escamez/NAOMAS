@@ -96,6 +96,3 @@ class Search(object):
             print "Interrupted by user"
             self.face_detection.unsubscribe("Search")
             sys.exit(0)
-
-
-

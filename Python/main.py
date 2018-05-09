@@ -27,7 +27,7 @@ if __name__ == "__main__":
 
     PORT = 9559
     IP = "169.254.76.111"
-    scenario = 2
+    scenario = 3
 
     if scenario == 1:
         desires = {'Marie': ['L\'équipe t\'attend en salle de réunion', 'Dis à Marie que l\'équipe l\'attend en salle \
@@ -39,7 +39,7 @@ if __name__ == "__main__":
         desires = {'Anna': ['L\'équipe t\'attend en salle de réunion', 'Dis à Anna que l\'équipe l\'attend en salle \
         de réunion']}
 
-        believes = {'Anna': ['Max']}
+        believes = {'Anna': ['Marie']}
 
     else:
         desires = {'Anna': ['L\'équipe t\'attend en salle de réunion', 'Dis à Anna que l\'équipe l\'attend en salle \
