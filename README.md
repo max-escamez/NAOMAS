@@ -1,12 +1,17 @@
 # NAOMAS : Nao Messenger
 
-Son principe est le suivant : le robot Nao se promène
-dans un couloir où les gens circulent. Il a pour mission de porter un, ou des
-messages à ses cibles. Il connaît évidemment les visages de ses cibles, mais aussi
-d’autres visages, et connaît également la liste des connaissances de chacune de
-ses cibles.
-Nao est positionné dans le couloir, à la recherche de sa cible ou d’une
-de ses connaissances. Il sonde le visage des gens qui évoluent sur son chemin.
-Lorsqu’il reconnaît une de ses cibles ou une connaissance de ses cibles, il l’interpelle,
-puis se déplace jusqu’à elle pour lui délivrer son message, ou lui demander
-de transmettre le message à la cible.
+## Principe
+
+Le robot Nao est placé dans un couloir où les gens circulent. Il a pour mission de porter un, ou des
+messages à différentes personnes préalablement définies. Il connaît évidemment les visages de ses cibles
+et également une liste des connaissances de chacune de ses cibles.
+Pour mener à bien sa mission, Nao sondera le visage des gens qui évoluent sur son chemin.
+Lorsqu’il reconnaît une de ses cibles ou une de ses connaissances, il l’interpelle,
+puis se déplace jusqu’à elle pour lui délivrer le message.
+
+## Fonctionnement
+
+Nao Messenger emploie l'apprentissage et la reconnaissance de visage de Nao ainsi que
+la notion de mouvement vers une cible préalablement détectée à l'aide de son tracker.
+De plus, le modèle BDI (Beliefs, Desires, Intentions) est utilisé pour modéliser
+la gestion des cibles, de leurs connaissances et des messages que Nao doit transmettre.
